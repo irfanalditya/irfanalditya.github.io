@@ -1,4 +1,4 @@
-baseurl = "/"
+baseurl = "https://irfanalditya.github.io/"
 languageCode = "en-us"
 theme = "hello-friend"
 paginate = 5
