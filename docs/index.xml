@@ -5,21 +5,21 @@
     
     
     
-    <link>https://irfanalditya.github.io/</link>
+    <link>/</link>
     <description>Recent content on Reversing Stories</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 May 2022 21:35:06 +0700</lastBuildDate>
+    <lastBuildDate>Fri, 13 May 2022 15:50:24 +0700</lastBuildDate>
     
-	<atom:link href="https://irfanalditya.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Firstpost</title>
-      <link>https://irfanalditya.github.io/posts/firstpost/</link>
-      <pubDate>Thu, 12 May 2022 21:35:06 +0700</pubDate>
+      <title>MalwareTech Challenge #1</title>
+      <link>/posts/malwaretech-chal1/</link>
+      <pubDate>Fri, 13 May 2022 15:50:24 +0700</pubDate>
       
-      <guid>https://irfanalditya.github.io/posts/firstpost/</guid>
+      <guid>/posts/malwaretech-chal1/</guid>
       <description>
         
           
@@ -28,7 +28,9 @@
         
         
         
-          Hello World!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+          Windows Reversing#Strings1#Hello friend, in this challenge we are given a PE file named strings1.exe_ . The rule of this challenge is that we can only use static analysis to solve it, that&amp;rsquo;s why there is &amp;ldquo;_&amp;rdquo; at the end of the PE file name, which is to prevent us from accidentally running it.
+The description of this challenge:
+ strings1.exe contains an un-encrypted flag stored within the executable.
           
         
         </description>
