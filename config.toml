@@ -45,7 +45,7 @@ publishDir = "docs"
     # lastModDisplay = ""
 
     [languages.en.params.logo]
-      logoText = "hello friend"
+      logoText = "Reversing Stories"
       logoHomeLink = "/"
     # or
     #
