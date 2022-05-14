@@ -9,13 +9,35 @@
     <description>Recent content in Posts on Reversing Stories</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 May 2022 15:50:24 +0700</lastBuildDate>
+    <lastBuildDate>Sun, 15 May 2022 00:52:50 +0700</lastBuildDate>
     
 	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>MalwareTech Challenge #1</title>
+      <title>Reversing Stories - MalwareTech Challenge #2</title>
+      <link>/posts/malwaretech-chal2/</link>
+      <pubDate>Sun, 15 May 2022 00:52:50 +0700</pubDate>
+      
+      <guid>/posts/malwaretech-chal2/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          Windows Reversing#Strings2.exe#Hello friend, back again with the MalwareTech Windows reversing challenge, now we are given a PE file named strings2.exe_. Same as the previous challenge, we can only use static analysis to solve this challenge.
+The description of this challenge:
+ strings2.exe contains an un-encrypted flag stored within the executable. When run, the program will output an MD5 hash of the flag but not the original.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Reversing Stories - MalwareTech Challenge #1</title>
       <link>/posts/malwaretech-chal1/</link>
       <pubDate>Fri, 13 May 2022 15:50:24 +0700</pubDate>
       
