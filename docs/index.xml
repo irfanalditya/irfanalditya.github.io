@@ -9,13 +9,36 @@
     <description>Recent content on Reversing Stories</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 May 2022 00:52:50 +0700</lastBuildDate>
+    <lastBuildDate>Tue, 17 May 2022 11:11:05 +0700</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Reversing Stories - MalwareTech Challenge #2</title>
+      <title>Reversing Stories - MalwareTech Challenge #3 Write-Ups</title>
+      <link>/posts/malwaretech-chal3/</link>
+      <pubDate>Tue, 17 May 2022 11:11:05 +0700</pubDate>
+      
+      <guid>/posts/malwaretech-chal3/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          Windows Reversing#Strings3.exe#Still with the MalwareTech Windows reversing challenge, now we are given a PE file named strings3.exe_.
+Also still with the same rules as the previous 2 (this and this), this challenge is static analysis only.
+The description:
+ strings3.exe contains an un-encrypted flag stored within the executable. When run, the program will output an MD5 hash of the flag but not the original. Can you extract the flag?
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Reversing Stories - MalwareTech Challenge #2 Write-Ups</title>
       <link>/posts/malwaretech-chal2/</link>
       <pubDate>Sun, 15 May 2022 00:52:50 +0700</pubDate>
       
@@ -38,7 +61,7 @@ The description of this challenge:
     </item>
     
     <item>
-      <title>Reversing Stories - MalwareTech Challenge #1</title>
+      <title>Reversing Stories - MalwareTech Challenge #1 Write-Ups</title>
       <link>/posts/malwaretech-chal1/</link>
       <pubDate>Fri, 13 May 2022 15:50:24 +0700</pubDate>
       
