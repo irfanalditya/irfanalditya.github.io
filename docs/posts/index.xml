@@ -92,10 +92,9 @@
         
         
         
-          [Hide and Seek]#Strings3#Still with the MalwareTech Windows reversing challenge, now we are given a PE file named strings3.exe_.
+          [Hide and Seek]# Each exe contain one or more un-encrypted flags and you need to find the correct one without bruteforcing. These challenges are designed as an introduction to reverse engineering.
+ Strings3#Still with the MalwareTech Windows reversing challenge, now we are given a PE file named strings3.exe_.
 Also still with the same rules as the previous 2 (this and this), this challenge is static analysis only.
-The description:
- strings3.exe contains an un-encrypted flag stored within the executable. When run, the program will output an MD5 hash of the flag but not the original.
           
         
         </description>
@@ -115,10 +114,9 @@ The description:
         
         
         
-          [Hide and Seek]#Strings#Hello friend, back again with the MalwareTech Windows reversing challenge, now we are given a PE file named strings2.exe_.
+          [Hide and Seek]# Each exe contain one or more un-encrypted flags and you need to find the correct one without bruteforcing. These challenges are designed as an introduction to reverse engineering.
+ Strings#Hello friend, back again with the MalwareTech Windows reversing challenge, now we are given a PE file named strings2.exe_.
 Same as the previous challenge, we can only use static analysis to solve this challenge.
-The description of this challenge:
- strings2.exe contains an un-encrypted flag stored within the executable. When run, the program will output an MD5 hash of the flag but not the original.
           
         
         </description>
@@ -138,9 +136,8 @@ The description of this challenge:
         
         
         
-          [Hide and Seek]#Strings#Hello friend, in this challenge we are given a PE file named strings1.exe_ . The rule of this challenge is that we can only use static analysis to solve it, that&amp;rsquo;s why there is &amp;ldquo;_&amp;rdquo; at the end of the PE file name, which is to prevent us from accidentally running it.
-The description of this challenge:
- strings1.exe contains an un-encrypted flag stored within the executable.
+          [Hide and Seek]# Each exe contain one or more un-encrypted flags and you need to find the correct one without bruteforcing. These challenges are designed as an introduction to reverse engineering.
+ Strings#Hello friend, in this challenge we are given a PE file named strings1.exe_ . The rule of this challenge is that we can only use static analysis to solve it, that&amp;rsquo;s why there is &amp;ldquo;_&amp;rdquo; at the end of the PE file name, which is to prevent us from accidentally running it.
           
         
         </description>
