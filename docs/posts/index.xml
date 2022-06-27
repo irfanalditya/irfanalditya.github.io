@@ -9,10 +9,32 @@
     <description>Recent content in Posts on Reversing Stories</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 30 May 2022 12:02:46 +0700</lastBuildDate>
+    <lastBuildDate>Sat, 25 Jun 2022 14:47:17 +0700</lastBuildDate>
     
 	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>MalwareTech Challenge #5 Write-Ups</title>
+      <link>/posts/malwaretech-chal6/</link>
+      <pubDate>Sat, 25 Jun 2022 14:47:17 +0700</pubDate>
+      
+      <guid>/posts/malwaretech-chal6/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          [ De-virtualization ]# Sometimes malware attempts to hinder reverse engineering by implementing a virtual machine which runs custom bytecode. These challenges are designed to test your ability to reverse engineer &amp;amp; manipulate custom bytecode.
+ VM1#Description:
+ vm1.exe implements a simple 8-bit virtual machine (VM) to try and stop reverse engineers from retrieving the flag. The VM’s RAM contains the encrypted flag and some bytecode to decrypt it.
+          
+        
+        </description>
+    </item>
     
     <item>
       <title>MalwareTech Challenge #5 Write-Ups</title>
@@ -28,11 +50,8 @@
         
         
         
-          [ Shellcode ]#Shellcode2#Hi, now we are given a PE file named shellcode2.exe_ .
-Description:
- shellcode2.exe contains a flag stored within the executable. When run, the program will output an MD5 hash of the flag but not the original. Can you extract the flag?
- Rules &amp;amp; Information:
-  You are not require to run shellcode2.exe, this challenge is static analysis only. Do not use a debugger or dumper to retrieve the decrypted flag from memory, this is cheating.
+          [ Shellcode ]# Position independent code (AKA Shellcode) is assembly code which can simply be copied to a memory location and run. Due to the lack of need for complex loading &amp;amp; initialization, it is popular for many tasks such as code injection. These challenges are designed to test your ability to reverse engineer malware shellcode.
+ Shellcode2#Hi, now we are given a PE file named shellcode2.
           
         
         </description>
@@ -52,11 +71,8 @@ Description:
         
         
         
-          [ Shellcode ]#Shellcode1#Hello friend, in this challenge we are given a PE file named shellcode1.exe_ .
-Description of this challenge:
- shellcode1.exe contains a flag stored within the executable. When run, the program will output an MD5 hash of the flag but not the original. Can you extract the flag?
- Rules &amp;amp; Information:
-  You are not require to run shellcode1.exe, this challenge is static analysis only.
+          [ Shellcode ]# Position independent code (AKA Shellcode) is assembly code which can simply be copied to a memory location and run. Due to the lack of need for complex loading &amp;amp; initialization, it is popular for many tasks such as code injection. These challenges are designed to test your ability to reverse engineer malware shellcode.
+ Shellcode1#Hello friend, in this challenge we are given a PE file named shellcode1.
           
         
         </description>
