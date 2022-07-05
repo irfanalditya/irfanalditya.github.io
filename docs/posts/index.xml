@@ -9,10 +9,32 @@
     <description>Recent content in Posts on Reversing Stories</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Jun 2022 14:47:17 +0700</lastBuildDate>
+    <lastBuildDate>Wed, 29 Jun 2022 13:41:11 +0700</lastBuildDate>
     
 	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>MalwareTech Windows Reversing Challenge #7 Write-Ups</title>
+      <link>/posts/malwaretech-chal7/</link>
+      <pubDate>Wed, 29 Jun 2022 13:41:11 +0700</pubDate>
+      
+      <guid>/posts/malwaretech-chal7/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          [ Ransomware ]# The goal of ransomware is to encrypt files; fortunately, ransomware developers often ignore the #1 rule of crypto (never roll your own crypto). As a result, it is sometimes possible to recover encrypted files without paying the ransom. These challenges are designed to test your ability to recover ransomware encrypted data.
+ Ransomware1#Description:
+ The administrator for FlagCorp was using an outdated Windows 7 system and got infected with some ransomware.
+          
+        
+        </description>
+    </item>
     
     <item>
       <title>MalwareTech Windows Reversing Challenge #6 Write-Ups</title>
