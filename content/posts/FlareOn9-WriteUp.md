@@ -1,7 +1,7 @@
 ---
 title: "Flare-On 9 Write-Up"
 date: 2022-11-26T08:14:30+07:00
-draft: true
+draft: false
 ---
 
 Hi friend, this year is my third year following Flare-on and is the first time i managed to solve all the challenges. I finished in 276th place as can be seen [here](https://twitter.com/aldityairfan/status/1585159006909526016).
@@ -326,3 +326,4 @@ I restart the program and then input everything that i got above.
 gotcha!!! :D
 
 
+... *to be continue* ...
