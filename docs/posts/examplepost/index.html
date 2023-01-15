@@ -11,7 +11,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta
   name="description"
-  content="heflksjdhfgiauhsdkgljahdfghuasdkjfgasdfg d fg sdfg hsdf sdfghsfgjkhskdfgjhksdjfhgsdfh sdfhsdfhdsfhsdhfshsh"
+  content="Hi friend, this year is my third year following Flare-on and is the first time i managed to solve all the challenges. I finished in 276th place as can be seen here. For those of you who don&amp;rsquo;t know what Flare-On is, you can read it here, is an annual reverse engineering CTF by Mandiant (formerly by FireEye).
+I&amp;rsquo;m not going to make write-up for challenge 1 because i don&amp;rsquo;t think it&amp;rsquo;s needed, let&amp;rsquo;s jump to challenge 2."
 />
 <meta
   name="keywords"
@@ -47,12 +48,14 @@
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Examplepost"/>
-<meta name="twitter:description" content="heflksjdhfgiauhsdkgljahdfghuasdkjfgasdfg d fg sdfg hsdf sdfghsfgjkhskdfgjhksdjfhgsdfh sdfhsdfhdsfhsdhfshsh"/>
+<meta name="twitter:description" content="Hi friend, this year is my third year following Flare-on and is the first time i managed to solve all the challenges. I finished in 276th place as can be seen here. For those of you who don&rsquo;t know what Flare-On is, you can read it here, is an annual reverse engineering CTF by Mandiant (formerly by FireEye).
+I&rsquo;m not going to make write-up for challenge 1 because i don&rsquo;t think it&rsquo;s needed, let&rsquo;s jump to challenge 2."/>
 
 
 
 <meta property="og:title" content="Examplepost" />
-<meta property="og:description" content="heflksjdhfgiauhsdkgljahdfghuasdkjfgasdfg d fg sdfg hsdf sdfghsfgjkhskdfgjhksdjfhgsdfh sdfhsdfhdsfhsdhfshsh" />
+<meta property="og:description" content="Hi friend, this year is my third year following Flare-on and is the first time i managed to solve all the challenges. I finished in 276th place as can be seen here. For those of you who don&rsquo;t know what Flare-On is, you can read it here, is an annual reverse engineering CTF by Mandiant (formerly by FireEye).
+I&rsquo;m not going to make write-up for challenge 1 because i don&rsquo;t think it&rsquo;s needed, let&rsquo;s jump to challenge 2." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/posts/examplepost/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-01-15T21:57:24+07:00" />
@@ -168,13 +171,242 @@
 
     <div class="post-content">
       
-      <p>heflksjdhfgiauhsdkgljahdfghuasdkjfgasdfg
-d
-fg
-sdfg
-hsdf
-sdfghsfgjkhskdfgjhksdjfhgsdfh
-sdfhsdfhdsfhsdhfshsh</p>
+      <p>Hi friend, this year is my third year following Flare-on and is the first time i managed to solve all the challenges. I finished in 276th place as can be seen <a href="https://twitter.com/aldityairfan/status/1585159006909526016">here</a>.
+For those of you who don&rsquo;t know what Flare-On is, you can read it <a href="https://www.mandiant.com/resources/blog/announcing-ninth-flareon-challenge">here</a>, is an annual reverse engineering CTF by Mandiant (formerly by FireEye).</p>
+<p><img src="Snipaste_2022-10-26_13-43-54.jpg" alt="pic1"></p>
+<p>I&rsquo;m not going to make write-up for challenge 1 because i don&rsquo;t think it&rsquo;s needed, let&rsquo;s jump to challenge 2.</p>
+<h3 id="challenge-2---pixelpoker">
+  Challenge 2 - PixelPoker
+  <a href="#challenge-2---pixelpoker" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<pre tabindex="0"><code>readme.txt:
+
+Welcome to PixelPoker ^_^, the pixel game that&#39;s sweeping the nation!
+
+Your goal is simple: find the correct pixel and click it
+
+Good luck!
+</code></pre><p><img src="Snipaste_2022-11-26_13-51-01.jpg" alt="pic2"></p>
+<p>As we can read in readme.txt above, the goal of this challenge is to find the correct pixel, and from DIE result, this file was created with C/C++.</p>
+<p>I played the app first to gather other information, and i found that we are only given 10 chances to choose the correct pixel, after 10 times clicking the wrong pixel, a message box popped up then the program closed after we click OK.</p>
+<p><img src="Snipaste_2022-11-26_14-08-37.jpg" alt="pic3"></p>
+<p>I opened the EXE in Ghidra then look for where the message box is executed and found it on FUN_004012c0.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>uVar8 <span style="color:#f92672">=</span> (uint)(<span style="color:#66d9ef">short</span>)param_4;
+</span></span><span style="display:flex;"><span>uVar6 <span style="color:#f92672">=</span> (uint)sVar1;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (DAT_00413298 <span style="color:#f92672">==</span> <span style="color:#ae81ff">10</span>) {
+</span></span><span style="display:flex;"><span>    MessageBoxA((HWND)<span style="color:#ae81ff">0x0</span>,<span style="color:#e6db74">&#34;Womp womp... :(&#34;</span>,<span style="color:#e6db74">&#34;Please play again!&#34;</span>,<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>    DestroyWindow(param_1);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>I assumed that pixel checking is also in this function. After analyzing this function in Ghidra decompiler, i&rsquo;m interested in the following code snippet:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>FUN_004017be(local_148,<span style="color:#ae81ff">0x104</span>,<span style="color:#e6db74">&#34;PixelPoker (%d,%d) - #%d/%d&#34;</span>,(<span style="color:#66d9ef">int</span>)(<span style="color:#66d9ef">short</span>)param_4,(<span style="color:#66d9ef">int</span>)sVar1,DAT_00413298,<span style="color:#ae81ff">10</span>);
+</span></span><span style="display:flex;"><span>SetWindowTextA(param_1,local_148);
+</span></span></code></pre></div><p>Then look at the window text when the app running:</p>
+<p><img src="Snipaste_2022-11-26_15-04-20.jpg" alt="pic4"></p>
+<p>Now i can assume about some of the variables in the above code snippet. <em>param_4</em> is coordinate X, <em>sVar1</em> is coordinate Y, and <em>DAT_00413298</em> is a counter.</p>
+<p>Before counter-checking, the value of coordinates X and Y is copied to variables <em>uVar8</em> and <em>uVar6</em> :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>uVar8 <span style="color:#f92672">=</span> (uint)(<span style="color:#66d9ef">short</span>)param_4;
+</span></span><span style="display:flex;"><span>uVar6 <span style="color:#f92672">=</span> (uint)sVar1;
+</span></span></code></pre></div><p>Let&rsquo;s rename <em>uVar8</em> to <em>coordinateX</em> and <em>uVar6</em> to <em>coordinateY</em> to make analysis easier.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>coordinateX <span style="color:#f92672">=</span> (uint)(<span style="color:#66d9ef">short</span>)param_4;
+</span></span><span style="display:flex;"><span>coordinateY <span style="color:#f92672">=</span> (uint)sVar1;
+</span></span></code></pre></div><p>continuing the analysis i found out where the values of the X and Y coordinates were checked</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> ((coordinateX <span style="color:#f92672">==</span> s_FLARE<span style="color:#f92672">-</span>On_00412004._0_4_ <span style="color:#f92672">%</span> DAT_00413280) <span style="color:#f92672">&amp;&amp;</span> (coordinateY <span style="color:#f92672">==</span> s_FLARE<span style="color:#f92672">-</span>On_00412004._4_4_ <span style="color:#f92672">%</span> DAT_00413284)){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// snippet ................
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>Ghidra recognized the data at address 0x412004 is a string &ldquo;FLARE-on&rdquo;, look in the assembly instruction, that string will be accessed as 2 DWORD named <em>s_FLARE-On_00412004.<em>0_4</em></em> and <em>s_FLARE-On_00412004.<em>4_4</em></em>. The first DWORD is 0x52414C46 (&ldquo;FLAR&rdquo;) and the second DWORD is 0x6E4F2D45 (&ldquo;E-0n&rdquo;). Now i just need to find out the value of DAT_00413280 and DAT_00413284, and because these variables are initiated in runtime, my lazy approach is using xdbg debugger.</p>
+<p>DAT_00413280:
+<img src="Snipaste_2022-11-26_15-54-38.jpg" alt="pic5"></p>
+<p>DAT_00413284:
+<img src="Snipaste_2022-11-26_15-54-58.jpg" alt="pic6"></p>
+<p>So now the correct value for coordinate X is 0x52414C46 % 0x2E5 = 0x5F (95) and coordinate Y is 0x6E4F2D45 % 0x281 = 0x139 (313). Let&rsquo;s click pixel at 95,313 and here&rsquo;s the result:</p>
+<p><img src="Snipaste_2022-11-26_17-05-45.jpg" alt="pic7"></p>
+<p>Gotcha!!! :)</p>
+<h3 id="challenge-3---magic8ball">
+  Challenge 3 - magic8ball
+  <a href="#challenge-3---magic8ball" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<p>Here we are given an EXE made with C++ with some DLLs.</p>
+<p><img src="Snipaste_2022-11-26_17-20-01.jpg" alt="pic3-1"></p>
+<p>I run the EXE to gather information about its behavior.</p>
+<p><img src="Snipaste_2022-11-26_17-23-28.jpg" alt="pic3-2"></p>
+<p>I assume that this program asks for two kinds of input, arrow keys and a question string. I try to input random arrow keys and question string and the program&rsquo;s answer is popped up in the center of the ball.</p>
+<p><img src="Snipaste_2022-11-26_17-30-58.jpg" alt="pic3-3"></p>
+<p>I opened Ghidra and find where is the program&rsquo;s answer string that i got is stored, then find its references. It brings me to FUN_004012b0.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#66d9ef">__fastcall</span> <span style="color:#a6e22e">FUN_004012b0</span>(<span style="color:#66d9ef">int</span> param_1)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined4 <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined4 <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">8</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0xc</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t\t</span><span style="color:#e6db74">It is</span><span style="color:#ae81ff">\n\t</span><span style="color:#e6db74">certain&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x10</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t\t</span><span style="color:#e6db74">It is</span><span style="color:#ae81ff">\n\t</span><span style="color:#e6db74">decidedly</span><span style="color:#ae81ff">\n\t\t\t</span><span style="color:#e6db74">so&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x14</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Without a</span><span style="color:#ae81ff">\n\t\t</span><span style="color:#e6db74">doubt&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x18</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t\t</span><span style="color:#e6db74">Yes</span><span style="color:#ae81ff">\n\t</span><span style="color:#e6db74">definitely&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x1c</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">You may</span><span style="color:#ae81ff">\n\t</span><span style="color:#e6db74">rely on</span><span style="color:#ae81ff">\n\t\t\t</span><span style="color:#e6db74">it&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x20</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">As I see</span><span style="color:#ae81ff">\n\t\t</span><span style="color:#e6db74">it, yes&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x24</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Most likely&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x28</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">Outlook</span><span style="color:#ae81ff">\n\t\t</span><span style="color:#e6db74">good&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x2c</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n\t\t\t</span><span style="color:#e6db74">Yes&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x30</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Signs point</span><span style="color:#ae81ff">\n\t\t</span><span style="color:#e6db74">to yes&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x34</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Reply hazy,</span><span style="color:#ae81ff">\n\t</span><span style="color:#e6db74">try again&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x38</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Ask again</span><span style="color:#ae81ff">\n\t\t</span><span style="color:#e6db74">later&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x3c</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Better not</span><span style="color:#ae81ff">\n\t</span><span style="color:#e6db74">tell you</span><span style="color:#ae81ff">\n\t\t</span><span style="color:#e6db74">now&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x40</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">Cannot</span><span style="color:#ae81ff">\t\n\t</span><span style="color:#e6db74">predict</span><span style="color:#ae81ff">\n\t\t</span><span style="color:#e6db74">now&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x44</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Concentrate</span><span style="color:#ae81ff">\n\t</span><span style="color:#e6db74">and ask</span><span style="color:#ae81ff">\n\t\t</span><span style="color:#e6db74">again&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x48</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Don</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">t count</span><span style="color:#ae81ff">\n\t\t</span><span style="color:#e6db74">on it&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x4c</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;My reply is</span><span style="color:#ae81ff">\n\t\t\t</span><span style="color:#e6db74">no&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x50</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;My sources</span><span style="color:#ae81ff">\n\t\t\t</span><span style="color:#e6db74">say</span><span style="color:#ae81ff">\n\t\t\t</span><span style="color:#e6db74">no&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x54</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Outlook not</span><span style="color:#ae81ff">\n\t</span><span style="color:#e6db74">so good&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x58</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t\t</span><span style="color:#e6db74">Very</span><span style="color:#ae81ff">\n\t</span><span style="color:#e6db74">doubtful&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined4 <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0xe0</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined4 <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0xf0</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined4 <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0xf4</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xf</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0xe0</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined4 <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0xf8</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined4 <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x108</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined4 <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x10c</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xf</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0xf8</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined4 <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x110</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined4 <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x120</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined4 <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x124</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xf</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x110</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined4 <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x128</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined4 <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x138</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined4 <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x13c</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xf</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x128</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined4 <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x140</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined4 <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x150</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined4 <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x154</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xf</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(undefined <span style="color:#f92672">*</span>)(param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x140</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> param_1;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>What the program does in this function is just initialize some components. So let&rsquo;s move to where FUN_004012b0 is called, it brings me to FUN_004027a0.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>undefined4 <span style="color:#a6e22e">FUN_004027a0</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> cVar1;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>_Dst;
+</span></span><span style="display:flex;"><span>  undefined4 uVar2;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">int</span> iVar3;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">int</span> iVar4;
+</span></span><span style="display:flex;"><span>  undefined4 <span style="color:#f92672">*</span>unaff_ESI;
+</span></span><span style="display:flex;"><span>  undefined4 uVar5;
+</span></span><span style="display:flex;"><span>  undefined4 in_stack_ffffffe8;
+</span></span><span style="display:flex;"><span>  undefined4 in_stack_ffffffec;
+</span></span><span style="display:flex;"><span>  undefined4 in_stack_fffffff0;
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  _Dst <span style="color:#f92672">=</span> (<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>)FUN_0040296d(<span style="color:#ae81ff">0x174</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (_Dst <span style="color:#f92672">==</span> (<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>)<span style="color:#ae81ff">0x0</span>) {
+</span></span><span style="display:flex;"><span>    DAT_00406090 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)<span style="color:#ae81ff">0x0</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    memset(_Dst,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0x174</span>);
+</span></span><span style="display:flex;"><span>    DAT_00406090 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)FUN_004012b0((<span style="color:#66d9ef">int</span>)_Dst);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  uVar5 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  FUN_004018f0(<span style="color:#f92672">&amp;</span>stack0xffffffe4,<span style="color:#e6db74">&#34;Magic 8 Ball&#34;</span>,(<span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>)<span style="color:#ae81ff">0xc</span>);
+</span></span><span style="display:flex;"><span>  uVar2 <span style="color:#f92672">=</span> FUN_00402090(DAT_00406090,(undefined4 <span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>stack0xffffffe4,<span style="color:#ae81ff">0x2fff0000</span>,<span style="color:#ae81ff">0x2fff0000</span>,<span style="color:#ae81ff">800</span>,<span style="color:#ae81ff">600</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">char</span>)uVar2 <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;\0&#39;</span>) {
+</span></span><span style="display:flex;"><span>    cVar1 <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>DAT_00406090;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (cVar1 <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;\0&#39;</span>) {
+</span></span><span style="display:flex;"><span>      iVar3 <span style="color:#f92672">=</span> SDL_GetTicks();
+</span></span><span style="display:flex;"><span>      FUN_00401e50(DAT_00406090,unaff_ESI,uVar5,in_stack_ffffffe8,in_stack_ffffffec,in_stack_fffffff0);
+</span></span><span style="display:flex;"><span>      FUN_004024e0(DAT_00406090);
+</span></span><span style="display:flex;"><span>      FUN_004022a0((<span style="color:#66d9ef">int</span>)DAT_00406090);
+</span></span><span style="display:flex;"><span>      iVar4 <span style="color:#f92672">=</span> SDL_GetTicks();
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> (iVar4 <span style="color:#f92672">-</span> iVar3 <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0x10</span>) {
+</span></span><span style="display:flex;"><span>        SDL_Delay(<span style="color:#ae81ff">0x10</span> <span style="color:#f92672">-</span> (iVar4 <span style="color:#f92672">-</span> iVar3));
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      cVar1 <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>DAT_00406090;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  FUN_004019f0((<span style="color:#66d9ef">int</span>)DAT_00406090);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Here&rsquo;s what i&rsquo;ve got after doing some analysis:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>FUN_004018f0(<span style="color:#f92672">&amp;</span>stack0xffffffe4,<span style="color:#e6db74">&#34;Magic 8 Ball&#34;</span>,(<span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>)<span style="color:#ae81ff">0xc</span>);                                           <span style="color:#75715e">// set up the window text
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>FUN_00401e50(DAT_00406090,unaff_ESI,uVar5,in_stack_ffffffe8,in_stack_ffffffec,in_stack_fffffff0);   <span style="color:#75715e">// GUI stuff
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>FUN_004024e0(DAT_00406090);                                                                         <span style="color:#75715e">// i assume this one is handling or checking user input
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>FUN_004022a0((<span style="color:#66d9ef">int</span>)DAT_00406090);                                                                    <span style="color:#75715e">// rendering stuff
+</span></span></span></code></pre></div><p>The following snippet code is what made me suspect FUN_004024e0.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#66d9ef">__fastcall</span> <span style="color:#a6e22e">FUN_004024e0</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>param_1)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ======================================================
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// snippet ==============================================
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// ======================================================
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)((<span style="color:#66d9ef">int</span>)param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x159</span>) <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;\0&#39;</span>) {
+</span></span><span style="display:flex;"><span>    uVar1 <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>(uint <span style="color:#f92672">*</span>)((<span style="color:#66d9ef">int</span>)param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x124</span>);
+</span></span><span style="display:flex;"><span>    ppcVar4 <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">0xf</span> <span style="color:#f92672">&lt;</span> uVar1) {
+</span></span><span style="display:flex;"><span>      ppcVar4 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)<span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)ppcVar4 <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;L&#39;</span>) {
+</span></span><span style="display:flex;"><span>      ppcVar4 <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">0xf</span> <span style="color:#f92672">&lt;</span> uVar1) {
+</span></span><span style="display:flex;"><span>        ppcVar4 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)<span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)((<span style="color:#66d9ef">int</span>)ppcVar4 <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;L&#39;</span>) {
+</span></span><span style="display:flex;"><span>        ppcVar4 <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">0xf</span> <span style="color:#f92672">&lt;</span> uVar1) {
+</span></span><span style="display:flex;"><span>          ppcVar4 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)<span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)((<span style="color:#66d9ef">int</span>)ppcVar4 <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;U&#39;</span>) {
+</span></span><span style="display:flex;"><span>          ppcVar4 <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">0xf</span> <span style="color:#f92672">&lt;</span> uVar1) {
+</span></span><span style="display:flex;"><span>            ppcVar4 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)<span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>          }
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)((<span style="color:#66d9ef">int</span>)ppcVar4 <span style="color:#f92672">+</span> <span style="color:#ae81ff">3</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;R&#39;</span>) {
+</span></span><span style="display:flex;"><span>            ppcVar4 <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">0xf</span> <span style="color:#f92672">&lt;</span> uVar1) {
+</span></span><span style="display:flex;"><span>              ppcVar4 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)<span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)(ppcVar4 <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;U&#39;</span>) {
+</span></span><span style="display:flex;"><span>              ppcVar4 <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>              <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">0xf</span> <span style="color:#f92672">&lt;</span> uVar1) {
+</span></span><span style="display:flex;"><span>                ppcVar4 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)<span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>              }
+</span></span><span style="display:flex;"><span>              <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)((<span style="color:#66d9ef">int</span>)ppcVar4 <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;L&#39;</span>) {
+</span></span><span style="display:flex;"><span>                ppcVar4 <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">0xf</span> <span style="color:#f92672">&lt;</span> uVar1) {
+</span></span><span style="display:flex;"><span>                  ppcVar4 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)<span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)((<span style="color:#66d9ef">int</span>)ppcVar4 <span style="color:#f92672">+</span> <span style="color:#ae81ff">6</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;D&#39;</span>) {
+</span></span><span style="display:flex;"><span>                  ppcVar4 <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>                  <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">0xf</span> <span style="color:#f92672">&lt;</span> uVar1) {
+</span></span><span style="display:flex;"><span>                    ppcVar4 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)<span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>                  }
+</span></span><span style="display:flex;"><span>                  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)((<span style="color:#66d9ef">int</span>)ppcVar4 <span style="color:#f92672">+</span> <span style="color:#ae81ff">7</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;U&#39;</span>) {
+</span></span><span style="display:flex;"><span>                    ppcVar4 <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">0xf</span> <span style="color:#f92672">&lt;</span> uVar1) {
+</span></span><span style="display:flex;"><span>                      ppcVar4 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)<span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)(ppcVar4 <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;L&#39;</span>) {
+</span></span><span style="display:flex;"><span>                      _Str1 <span style="color:#f92672">=</span> (undefined4 <span style="color:#f92672">*</span>)((<span style="color:#66d9ef">int</span>)param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0xf8</span>);
+</span></span><span style="display:flex;"><span>                      <span style="color:#66d9ef">if</span> (<span style="color:#ae81ff">0xf</span> <span style="color:#f92672">&lt;</span> <span style="color:#f92672">*</span>(uint <span style="color:#f92672">*</span>)((<span style="color:#66d9ef">int</span>)param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x10c</span>)) {
+</span></span><span style="display:flex;"><span>                        _Str1 <span style="color:#f92672">=</span> (undefined4 <span style="color:#f92672">*</span>)<span style="color:#f92672">*</span>_Str1;
+</span></span><span style="display:flex;"><span>                      }
+</span></span><span style="display:flex;"><span>                      iVar2 <span style="color:#f92672">=</span> strncmp((<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)_Str1,(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)((<span style="color:#66d9ef">int</span>)param_1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x5c</span>),<span style="color:#ae81ff">0xf</span>);
+</span></span><span style="display:flex;"><span>                      <span style="color:#66d9ef">if</span> (iVar2 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>                        FUN_00401220(<span style="color:#f92672">&amp;</span>stack0xffffffc0,<span style="color:#66d9ef">this</span>);
+</span></span><span style="display:flex;"><span>                        FUN_00401a10(param_1,in_stack_ffffffc0);
+</span></span><span style="display:flex;"><span>                      }
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                  }
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>              }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>          }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As you can see, there are nested-if and strncmp() which can be assumed that the program tries to compare/check something here.  Let&rsquo;s jump to the debugger, set a breakpoint at the beginning of nested-if, then try to input something into the program. I will use &ldquo;up, down, left, right&rdquo; for arrow-keys input, and &ldquo;how are you?&rdquo; for question input.</p>
+<p>Here&rsquo;s the result from my xdbg debugger when the program is hit the breakpoint:</p>
+<p><img src="Snipaste_2022-11-26_21-19-25.jpg" alt="pic3-4"></p>
+<p>The disassembler&rsquo;s comment told me everything without having to step through the whole instructions. So what i&rsquo;ve got here is that the nested-if is for checking arrow-keys input then strncmp() is for checking the question input. Every arrow-keys input will be recorded and translated into a character, &ldquo;U&rdquo; for up, &ldquo;D&rdquo; for down, &ldquo;L&rdquo; for left, and &ldquo;R&rdquo; for right, and if we look at nested-if, we can find out the correct arrow-keys input is L-L-U-R-U-L-D-U-L. Then the question input will compare it with string <em>&ldquo;gimme flag pls?&rdquo;</em> using strncmp().</p>
+<p>I restart the program and then input everything that i got above.</p>
+<p><img src="Snipaste_2022-11-26_21-42-05.jpg" alt="pic3-5"></p>
+<p>gotcha!!! :D</p>
+<p>&hellip; <em>to be continue</em> &hellip;</p>
 
     </div>
     
