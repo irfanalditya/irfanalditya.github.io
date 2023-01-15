@@ -9,10 +9,30 @@
     <description>Recent content in Posts on Reversing Stories</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 26 Nov 2022 08:14:30 +0700</lastBuildDate>
+    <lastBuildDate>Sun, 15 Jan 2023 21:57:24 +0700</lastBuildDate>
     
 	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Examplepost</title>
+      <link>/posts/examplepost/</link>
+      <pubDate>Sun, 15 Jan 2023 21:57:24 +0700</pubDate>
+      
+      <guid>/posts/examplepost/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          heflksjdhfgiauhsdkgljahdfghuasdkjfgasdfg d fg sdfg hsdf sdfghsfgjkhskdfgjhksdjfhgsdfh sdfhsdfhdsfhsdhfshsh
+          
+        
+        </description>
+    </item>
     
     <item>
       <title>Flare-On 9 Write-Up</title>
