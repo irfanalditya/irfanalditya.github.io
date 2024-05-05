@@ -4,17 +4,15 @@ date: 2023-01-04T13:54:33+07:00
 draft: false
 ---
 
-Hi friend, this year is my third year following Flare-on and is the first time i managed to solve all the challenges. I finished in 276th place as can be seen [here](https://twitter.com/aldityairfan/status/1585159006909526016).
+Hi friend, this year is my third year following Flare-on and is the first time i managed to solve all the challenges. I finished at 276th place as can be seen [here](https://twitter.com/aldityairfan/status/1585159006909526016).
 For those of you who don't know what Flare-On is, you can read it [here](https://www.mandiant.com/resources/blog/announcing-ninth-flareon-challenge), is an annual reverse engineering CTF by Mandiant (formerly by FireEye).
-
 
 ![pic1](Snipaste_2022-10-26_13-43-54.jpg)
 
-
-I'm not going to make write-up for challenge 1 because i don't think it's needed, let's jump to challenge 2.
-
+I'm not going to make write-up for challenge 1 because i don't think it's needed, so let's jump to challenge 2.
 
 ### Challenge 2 - PixelPoker
+
 ```
 readme.txt:
 
@@ -25,18 +23,13 @@ Your goal is simple: find the correct pixel and click it
 Good luck!
 ```
 
-
 ![pic2](Snipaste_2022-11-26_13-51-01.jpg)
-
 
 As we can read in readme.txt above, the goal of this challenge is to find the correct pixel, and from DIE result, this file was created with C/C++.
 
-
 I played the app first to gather other information, and i found that we are only given 10 chances to choose the correct pixel, after 10 times clicking the wrong pixel, a message box popped up then the program closed after we click OK.
 
-
 ![pic3](Snipaste_2022-11-26_14-08-37.jpg)
-
 
 I opened the EXE in Ghidra then look for where the message box is executed and found it on FUN_004012c0.
 
@@ -60,25 +53,23 @@ Then look at the window text when the app running:
 
 ![pic4](Snipaste_2022-11-26_15-04-20.jpg)
 
+Now i can assume about some of the variables in the above code snippet. _param_4_ is coordinate X, _sVar1_ is coordinate Y, and _DAT_00413298_ is a counter.
 
-Now i can assume about some of the variables in the above code snippet. *param_4* is coordinate X, *sVar1* is coordinate Y, and *DAT_00413298* is a counter.
-
-
-Before counter-checking, the value of coordinates X and Y is copied to variables *uVar8* and *uVar6* :
+Before counter-checking, the value of coordinates X and Y is copied to variables _uVar8_ and _uVar6_ :
 
 ```cpp
 uVar8 = (uint)(short)param_4;
 uVar6 = (uint)sVar1;
 ```
 
-Let's rename *uVar8* to *coordinateX* and *uVar6* to *coordinateY* to make analysis easier.
+Let's rename _uVar8_ to _coordinateX_ and _uVar6_ to _coordinateY_ to make analysis easier.
 
 ```cpp
 coordinateX = (uint)(short)param_4;
 coordinateY = (uint)sVar1;
 ```
 
-continuing the analysis i found out where the values of the X and Y coordinates were checked 
+continuing the analysis i found out where the values of the X and Y coordinates were checked
 
 ```cpp
 if ((coordinateX == s_FLARE-On_00412004._0_4_ % DAT_00413280) && (coordinateY == s_FLARE-On_00412004._4_4_ % DAT_00413284)){
@@ -86,25 +77,19 @@ if ((coordinateX == s_FLARE-On_00412004._0_4_ % DAT_00413280) && (coordinateY ==
 }
 ```
 
-Ghidra recognized the data at address 0x412004 is a string "FLARE-on", look in the assembly instruction, that string will be accessed as 2 DWORD named *s_FLARE-On_00412004._0_4_* and *s_FLARE-On_00412004._4_4_*. The first DWORD is 0x52414C46 ("FLAR") and the second DWORD is 0x6E4F2D45 ("E-0n"). Now i just need to find out the value of DAT_00413280 and DAT_00413284, and because these variables are initiated in runtime, my lazy approach is using xdbg debugger.
-
+Ghidra recognized the data at address 0x412004 is a string "FLARE-on", look in the assembly instruction, that string will be accessed as 2 DWORD named _s*FLARE-On_00412004.\_0_4*_ and _s*FLARE-On_00412004.\_4_4*_. The first DWORD is 0x52414C46 ("FLAR") and the second DWORD is 0x6E4F2D45 ("E-0n"). Now i just need to find out the value of DAT_00413280 and DAT_00413284, and because these variables are initiated in runtime, my lazy approach is using xdbg debugger.
 
 DAT_00413280:
 ![pic5](Snipaste_2022-11-26_15-54-38.jpg)
 
-
 DAT_00413284:
 ![pic6](Snipaste_2022-11-26_15-54-58.jpg)
 
-
 So now the correct value for coordinate X is 0x52414C46 % 0x2E5 = 0x5F (95) and coordinate Y is 0x6E4F2D45 % 0x281 = 0x139 (313). Let's click pixel at 95,313 and here's the result:
-
 
 ![pic7](Snipaste_2022-11-26_17-05-45.jpg)
 
-
 Gotcha!!! :)
-
 
 ### Challenge 3 - magic8ball
 
@@ -112,16 +97,13 @@ Here we are given an EXE made with C++ with some DLLs.
 
 ![pic3-1](Snipaste_2022-11-26_17-20-01.jpg)
 
-
 I run the EXE to gather information about its behavior.
 
 ![pic3-2](Snipaste_2022-11-26_17-23-28.jpg)
 
-
 I assume that this program asks for two kinds of input, arrow keys and a question string. I try to input random arrow keys and question string and the program's answer is popped up in the center of the ball.
 
 ![pic3-3](Snipaste_2022-11-26_17-30-58.jpg)
-
 
 I opened Ghidra and find where is the program's answer string that i got is stored, then find its references. It brings me to FUN_004012b0.
 
@@ -189,7 +171,7 @@ undefined4 FUN_004027a0(void)
   undefined4 in_stack_ffffffe8;
   undefined4 in_stack_ffffffec;
   undefined4 in_stack_fffffff0;
-  
+
   _Dst = (void *)FUN_0040296d(0x174);
   if (_Dst == (void *)0x0) {
     DAT_00406090 = (char *)0x0;
@@ -307,23 +289,18 @@ void __fastcall FUN_004024e0(void *param_1)
 }
 ```
 
-As you can see, there are nested-if and strncmp() which can be assumed that the program tries to compare/check something here.  Let's jump to the debugger, set a breakpoint at the beginning of nested-if, then try to input something into the program. I will use "up, down, left, right" for arrow-keys input, and "how are you?" for question input.
-
+As you can see, there are nested-if and strncmp() which can be assumed that the program tries to compare/check something here. Let's jump to the debugger, set a breakpoint at the beginning of nested-if, then try to input something into the program. I will use "up, down, left, right" for arrow-keys input, and "how are you?" for question input.
 
 Here's the result from my xdbg debugger when the program is hit the breakpoint:
 
 ![pic3-4](Snipaste_2022-11-26_21-19-25.jpg)
 
-
-The disassembler's comment told me everything without having to step through the whole instructions. So what i've got here is that the nested-if is for checking arrow-keys input then strncmp() is for checking the question input. Every arrow-keys input will be recorded and translated into a character, "U" for up, "D" for down, "L" for left, and "R" for right, and if we look at nested-if, we can find out the correct arrow-keys input is L-L-U-R-U-L-D-U-L. Then the question input will compare it with string *"gimme flag pls?"* using strncmp().
+The disassembler's comment told me everything without having to step through the whole instructions. So what i've got here is that the nested-if is for checking arrow-keys input then strncmp() is for checking the question input. Every arrow-keys input will be recorded and translated into a character, "U" for up, "D" for down, "L" for left, and "R" for right, and if we look at nested-if, we can find out the correct arrow-keys input is L-L-U-R-U-L-D-U-L. Then the question input will compare it with string _"gimme flag pls?"_ using strncmp().
 
 I restart the program and then input everything that i got above.
 
-
 ![pic3-5](Snipaste_2022-11-26_21-42-05.jpg)
-
 
 gotcha!!! :D
 
-
-... *to be continue* ...
+... _to be continue_ ...
