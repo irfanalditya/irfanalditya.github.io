@@ -11,8 +11,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta
   name="description"
-  content="Hi friend, this year is my third year following Flare-on and is the first time i managed to solve all the challenges. I finished in 276th place as can be seen here. For those of you who don&amp;rsquo;t know what Flare-On is, you can read it here, is an annual reverse engineering CTF by Mandiant (formerly by FireEye).
-I&amp;rsquo;m not going to make write-up for challenge 1 because i don&amp;rsquo;t think it&amp;rsquo;s needed, let&amp;rsquo;s jump to challenge 2."
+  content="Hi friend, this year is my third year following Flare-on and is the first time i managed to solve all the challenges. I finished at 276th place as can be seen here. For those of you who don&amp;rsquo;t know what Flare-On is, you can read it here, is an annual reverse engineering CTF by Mandiant (formerly by FireEye).
+I&amp;rsquo;m not going to make write-up for challenge 1 because i don&amp;rsquo;t think it&amp;rsquo;s needed, so let&amp;rsquo;s jump to challenge 2."
 />
 <meta
   name="keywords"
@@ -48,14 +48,14 @@ I&amp;rsquo;m not going to make write-up for challenge 1 because i don&amp;rsquo
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="FlareOn9 Write-Ups"/>
-<meta name="twitter:description" content="Hi friend, this year is my third year following Flare-on and is the first time i managed to solve all the challenges. I finished in 276th place as can be seen here. For those of you who don&rsquo;t know what Flare-On is, you can read it here, is an annual reverse engineering CTF by Mandiant (formerly by FireEye).
-I&rsquo;m not going to make write-up for challenge 1 because i don&rsquo;t think it&rsquo;s needed, let&rsquo;s jump to challenge 2."/>
+<meta name="twitter:description" content="Hi friend, this year is my third year following Flare-on and is the first time i managed to solve all the challenges. I finished at 276th place as can be seen here. For those of you who don&rsquo;t know what Flare-On is, you can read it here, is an annual reverse engineering CTF by Mandiant (formerly by FireEye).
+I&rsquo;m not going to make write-up for challenge 1 because i don&rsquo;t think it&rsquo;s needed, so let&rsquo;s jump to challenge 2."/>
 
 
 
 <meta property="og:title" content="FlareOn9 Write-Ups" />
-<meta property="og:description" content="Hi friend, this year is my third year following Flare-on and is the first time i managed to solve all the challenges. I finished in 276th place as can be seen here. For those of you who don&rsquo;t know what Flare-On is, you can read it here, is an annual reverse engineering CTF by Mandiant (formerly by FireEye).
-I&rsquo;m not going to make write-up for challenge 1 because i don&rsquo;t think it&rsquo;s needed, let&rsquo;s jump to challenge 2." />
+<meta property="og:description" content="Hi friend, this year is my third year following Flare-on and is the first time i managed to solve all the challenges. I finished at 276th place as can be seen here. For those of you who don&rsquo;t know what Flare-On is, you can read it here, is an annual reverse engineering CTF by Mandiant (formerly by FireEye).
+I&rsquo;m not going to make write-up for challenge 1 because i don&rsquo;t think it&rsquo;s needed, so let&rsquo;s jump to challenge 2." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/posts/flare0n9/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-01-04T13:54:33+07:00" />
@@ -171,10 +171,10 @@ I&rsquo;m not going to make write-up for challenge 1 because i don&rsquo;t think
 
     <div class="post-content">
       
-      <p>Hi friend, this year is my third year following Flare-on and is the first time i managed to solve all the challenges. I finished in 276th place as can be seen <a href="https://twitter.com/aldityairfan/status/1585159006909526016">here</a>.
+      <p>Hi friend, this year is my third year following Flare-on and is the first time i managed to solve all the challenges. I finished at 276th place as can be seen <a href="https://twitter.com/aldityairfan/status/1585159006909526016">here</a>.
 For those of you who don&rsquo;t know what Flare-On is, you can read it <a href="https://www.mandiant.com/resources/blog/announcing-ninth-flareon-challenge">here</a>, is an annual reverse engineering CTF by Mandiant (formerly by FireEye).</p>
 <p><img src="Snipaste_2022-10-26_13-43-54.jpg" alt="pic1"></p>
-<p>I&rsquo;m not going to make write-up for challenge 1 because i don&rsquo;t think it&rsquo;s needed, let&rsquo;s jump to challenge 2.</p>
+<p>I&rsquo;m not going to make write-up for challenge 1 because i don&rsquo;t think it&rsquo;s needed, so let&rsquo;s jump to challenge 2.</p>
 <h3 id="challenge-2---pixelpoker">
   Challenge 2 - PixelPoker
   <a href="#challenge-2---pixelpoker" class="h-anchor" aria-hidden="true">#</a>
@@ -213,7 +213,7 @@ Good luck!
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> ((coordinateX <span style="color:#f92672">==</span> s_FLARE<span style="color:#f92672">-</span>On_00412004._0_4_ <span style="color:#f92672">%</span> DAT_00413280) <span style="color:#f92672">&amp;&amp;</span> (coordinateY <span style="color:#f92672">==</span> s_FLARE<span style="color:#f92672">-</span>On_00412004._4_4_ <span style="color:#f92672">%</span> DAT_00413284)){
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// snippet ................
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
-</span></span></code></pre></div><p>Ghidra recognized the data at address 0x412004 is a string &ldquo;FLARE-on&rdquo;, look in the assembly instruction, that string will be accessed as 2 DWORD named <em>s_FLARE-On_00412004.<em>0_4</em></em> and <em>s_FLARE-On_00412004.<em>4_4</em></em>. The first DWORD is 0x52414C46 (&ldquo;FLAR&rdquo;) and the second DWORD is 0x6E4F2D45 (&ldquo;E-0n&rdquo;). Now i just need to find out the value of DAT_00413280 and DAT_00413284, and because these variables are initiated in runtime, my lazy approach is using xdbg debugger.</p>
+</span></span></code></pre></div><p>Ghidra recognized the data at address 0x412004 is a string &ldquo;FLARE-on&rdquo;, look in the assembly instruction, that string will be accessed as 2 DWORD named <em>s<em>FLARE-On_00412004._0_4</em></em> and <em>s<em>FLARE-On_00412004._4_4</em></em>. The first DWORD is 0x52414C46 (&ldquo;FLAR&rdquo;) and the second DWORD is 0x6E4F2D45 (&ldquo;E-0n&rdquo;). Now i just need to find out the value of DAT_00413280 and DAT_00413284, and because these variables are initiated in runtime, my lazy approach is using xdbg debugger.</p>
 <p>DAT_00413280:
 <img src="Snipaste_2022-11-26_15-54-38.jpg" alt="pic5"></p>
 <p>DAT_00413284:
@@ -291,7 +291,7 @@ Good luck!
 </span></span><span style="display:flex;"><span>  undefined4 in_stack_ffffffe8;
 </span></span><span style="display:flex;"><span>  undefined4 in_stack_ffffffec;
 </span></span><span style="display:flex;"><span>  undefined4 in_stack_fffffff0;
-</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>  _Dst <span style="color:#f92672">=</span> (<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>)FUN_0040296d(<span style="color:#ae81ff">0x174</span>);
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (_Dst <span style="color:#f92672">==</span> (<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>)<span style="color:#ae81ff">0x0</span>) {
 </span></span><span style="display:flex;"><span>    DAT_00406090 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)<span style="color:#ae81ff">0x0</span>;
@@ -399,7 +399,7 @@ Good luck!
 </span></span><span style="display:flex;"><span>  }
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>As you can see, there are nested-if and strncmp() which can be assumed that the program tries to compare/check something here.  Let&rsquo;s jump to the debugger, set a breakpoint at the beginning of nested-if, then try to input something into the program. I will use &ldquo;up, down, left, right&rdquo; for arrow-keys input, and &ldquo;how are you?&rdquo; for question input.</p>
+</span></span></code></pre></div><p>As you can see, there are nested-if and strncmp() which can be assumed that the program tries to compare/check something here. Let&rsquo;s jump to the debugger, set a breakpoint at the beginning of nested-if, then try to input something into the program. I will use &ldquo;up, down, left, right&rdquo; for arrow-keys input, and &ldquo;how are you?&rdquo; for question input.</p>
 <p>Here&rsquo;s the result from my xdbg debugger when the program is hit the breakpoint:</p>
 <p><img src="Snipaste_2022-11-26_21-19-25.jpg" alt="pic3-4"></p>
 <p>The disassembler&rsquo;s comment told me everything without having to step through the whole instructions. So what i&rsquo;ve got here is that the nested-if is for checking arrow-keys input then strncmp() is for checking the question input. Every arrow-keys input will be recorded and translated into a character, &ldquo;U&rdquo; for up, &ldquo;D&rdquo; for down, &ldquo;L&rdquo; for left, and &ldquo;R&rdquo; for right, and if we look at nested-if, we can find out the correct arrow-keys input is L-L-U-R-U-L-D-U-L. Then the question input will compare it with string <em>&ldquo;gimme flag pls?&rdquo;</em> using strncmp().</p>
